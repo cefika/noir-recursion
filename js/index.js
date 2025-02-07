@@ -16,13 +16,16 @@ const main = async () => {
         artifacts: mainArtifacts 
     } = await generateProof(compiledMain, { x: 1, y: 2, z: 3 });
     log('Main proof and recursive artifacts generated');
+    console.log(mainPublicInputs);
 
     log('Generating recursive proof 1...')
-    const { proof: rec1Proof, artifacts: rec1Artifacts} = await generateRecursiveProof(compiledRec1, mainPublicInputs, mainArtifacts, { c: 3 });
+    const { proof: rec1Proof, artifacts: rec1Artifacts, publicInputs: recPublicInputs} = await generateRecursiveProof(compiledRec1, mainPublicInputs, mainArtifacts, { c: 3 });
     log('Recursive proof 1 generated');
+    
+    console.log(recPublicInputs)
 
     log('Generating recursive proof 2...')
-    const { proof: rec2Proof, artifacts: rec2Artifacts, publicInputs: rec2PublicInputs} = await generateRecursiveProof(compiledRec2, mainPublicInputs, mainArtifacts, { d: 4 });
+    const { proof: rec2Proof, artifacts: rec2Artifacts, publicInputs: rec2PublicInputs} = await generateRecursiveProof(compiledRec2, recPublicInputs, rec1Artifacts, { d: 4 });
     log('Recursive proof 2 generated');
     
     console.log(rec2PublicInputs);
