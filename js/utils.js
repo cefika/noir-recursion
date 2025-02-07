@@ -57,7 +57,7 @@ const buildBackend = (compiledCircuit, recursive=false) => {
     const { program } = compiledCircuit;
     const noir = new Noir(program);
 
-    const backend = new BarretenbergBackend(program, { threads: 8 }, { recursive });
+    const backend = new BarretenbergBackend(program, { threads: 4 }, { recursive });
     return { backend, noir };    
 }
 
@@ -67,7 +67,7 @@ const buildBackend = (compiledCircuit, recursive=false) => {
  * @param {*} inputs 
  * @returns 
  */
-const buildBackendAndWitness = async (compiledCircuit, inputs, recursive = true) => {
+const buildBackendAndWitness = async (compiledCircuit, inputs, recursive = false) => {
     const { backend, noir } = buildBackend(compiledCircuit, recursive);
 
     const { witness } = await noir.execute(inputs);
@@ -101,7 +101,7 @@ export const generateRecursiveProof = async (compiledCircuit, proofPublicInputs,
         key_hash: vkHash,
     }
 
-    return generateProof(compiledCircuit, recinputs, false);
+    return generateProof(compiledCircuit, recinputs, true);
 }
 
 export const verifyProof = async(compiledCircuit, proof, publicInputs) => {

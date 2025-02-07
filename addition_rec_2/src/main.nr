@@ -1,10 +1,9 @@
 use dep::std;
-#[recursive]
 
 fn main(
     verification_key : [Field; 114], 
     proof : [Field; 93], 
-    public_inputs : [Field; 17], 
+    public_inputs : [Field; 1], 
     key_hash : Field,
     d: Field
 ) -> pub Field {
